@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/busName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingBottom="2dp"
+        tools:text="-"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:gravity="center_vertical"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="Arrival:"
+            android:textColor="@color/white"
+            android:textSize="10sp"/>
+
+        <TextView
+            android:id="@+id/arrivalCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dp"
+            tools:text="-"
+            android:textSize="10sp"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="Departure :"
+            android:textColor="@color/white"
+            android:textSize="10sp"/>
+
+        <TextView
+            android:id="@+id/departureCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dp"
+            tools:text="-"
+            android:textSize="10sp"
+            android:textColor="@color/white"
+            android:layout_marginBottom="16dp"/>
+    </LinearLayout>
+
+</LinearLayout>

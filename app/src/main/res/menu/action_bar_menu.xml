@@ -2,20 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/search_button"
+    <item android:id="@+id/search"
         android:icon="@drawable/baseline_search_24"
         android:title="Search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="collapseActionView|always"
+        app:showAsAction="ifRoom"
         />
 
-    <item android:id="@+id/account_button"
+    <item android:id="@+id/account"
         android:icon="@drawable/baseline_account_circle_24"
         android:title="Account"
-        app:showAsAction="collapseActionView|always"/>
+        app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/balance_button"
         android:icon="@drawable/baseline_account_balance_wallet_24"
         android:title="Balance"
-        app:showAsAction="collapseActionView|always"/>
+        app:showAsAction="ifRoom"/>
 </menu>
