@@ -2,29 +2,52 @@ package com.FairuzMuhammadJBusRA.jbus_android;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.os.Bundle;
+import android.widget.Toast;
+
+import com.FairuzMuhammadJBusRA.jbus_android.model.Account;
+import com.FairuzMuhammadJBusRA.jbus_android.model.BaseResponse;
+import com.FairuzMuhammadJBusRA.jbus_android.request.BaseApiService;
+import com.FairuzMuhammadJBusRA.jbus_android.request.UtilsApi;
+import java.util.Locale;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AboutMeActivity extends AppCompatActivity {
-
-    private String username = "lebron.james";
-    private String email = "kingjames@gmail.com";
-    private String balance = "IDR 1,525,478,507,462.00";
+    private Button topUpButton = null;
+    private EditText amount = null;
+    private TextView initial, usernameid, emailid, balanceid;
+    private BaseApiService mApiService;
+    private Context mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_me);
         getSupportActionBar().hide();
 
-        TextView initial = findViewById(R.id.initial);
-        TextView usernameid = findViewById(R.id.username);
-        TextView emailid = findViewById(R.id.email);
-        TextView balanceid = findViewById(R.id.balance);
+        mContext = this;
+        mApiService = UtilsApi.getApiService();
+        initial = findViewById(R.id.initial);
+        usernameid = findViewById(R.id.username);
+        emailid = findViewById(R.id.email);
+        balanceid = findViewById(R.id.balance);
+        topUpButton = findViewById(R.id.topupbutton);
+        amount = findViewById(R.id.topupamount);
+        String balances = String.format(Locale.getDefault(), "%.2f", MainActivity.loggedAccount.balance);
 
-        initial.setText(getInitials(username));
-        usernameid.setText(username);
-        emailid.setText(email);
-        balanceid.setText(balance);
+        initial.setText(getInitials(MainActivity.loggedAccount.name));
+        usernameid.setText(MainActivity.loggedAccount.name);
+        emailid.setText(MainActivity.loggedAccount.email);
+        balanceid.setText("IDR " + balances);
+
+        topUpButton.setOnClickListener(v->{
+            topUp();
+        });
     }
 
     private String getInitials(String name) {
@@ -40,5 +63,36 @@ public class AboutMeActivity extends AppCompatActivity {
             }
         }
         return initials;
+    }
+
+    protected void topUp(){
+        int userId = MainActivity.loggedAccount.id;
+        String amountS = amount.getText().toString();
+        if(amountS.isEmpty()){
+            Toast.makeText(mContext,"Field cannot be empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        double amountD = Double.parseDouble(amountS);
+        mApiService.topUp(userId, amountD).enqueue(new Callback<BaseResponse<Account>>(){
+            public void onResponse(Call<BaseResponse< Account >> call, Response<BaseResponse<Account>> response){
+                if(!response.isSuccessful()){
+                    Toast.makeText(mContext, "Application error " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                BaseResponse<Account> res = response.body();
+                if(res.success){
+                    MainActivity.loggedAccount.balance = res.payload.balance;
+                    String balances = String.format(Locale.getDefault(), "%.2f", MainActivity.loggedAccount.balance);
+                    balanceid.setText("IDR " + balances);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<Account>> call, Throwable t) {
+                System.out.println("On Failure");
+                Toast.makeText(mContext, "Invalid Input", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
