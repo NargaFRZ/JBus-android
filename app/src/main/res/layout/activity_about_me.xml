@@ -137,4 +137,55 @@
             app:cornerRadius="21dp"
             />
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/renter"
+        android:paddingTop="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/areyou"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Are you a renter?"
+            android:textStyle="italic"
+            android:gravity="center"
+            android:textColor="@color/white"
+            />
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/companyreg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Register your Company"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            app:cornerRadius="20dp"
+            />
+
+        <Button
+            android:id="@+id/manage"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_gravity="center"
+            android:text="Manage Bus"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            app:cornerRadius="20dp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            />
+    </RelativeLayout>
 </LinearLayout>

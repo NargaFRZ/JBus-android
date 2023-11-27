@@ -5,16 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/busName"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:paddingBottom="2dp"
-        tools:text="-"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:gravity="center_vertical"/>
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/busName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingBottom="2dp"
+            tools:text="-"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:gravity="center_vertical"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/baseline_calendar_month_24"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,12 +36,12 @@
         <TextView
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:text="Arrival:"
+            android:text="Arrival :"
             android:textColor="@color/white"
             android:textSize="10sp"/>
 
         <TextView
-            android:id="@+id/arrivalCity"
+            android:id="@+id/arrival"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="2dp"
@@ -51,7 +63,7 @@
             android:textSize="10sp"/>
 
         <TextView
-            android:id="@+id/departureCity"
+            android:id="@+id/departure"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="2dp"

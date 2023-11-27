@@ -9,13 +9,13 @@
     android:padding="16dp"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".RegisterActivity">
+    tools:context=".RegisterRenterActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_bold"
-        android:text="Register your account"
+        android:text="Register your company"
         android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold" />
@@ -24,41 +24,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_thin"
-        android:text="Input username, email, and password"
+        android:text="Input Company Name, Address, and Phone Number"
         android:textColor="@color/white"
         android:textSize="12sp" />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:hint="Username"
+        android:hint="Company Name"
         android:textColorHint="@color/white"
         android:backgroundTint="@color/white"
         android:inputType="textPersonName"
         android:padding="12dp" />
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:hint="Email"
+        android:hint="Address"
         android:textColorHint="@color/white"
         android:backgroundTint="@color/white"
-        android:inputType="textEmailAddress"
+        android:inputType="textPostalAddress"
         android:padding="12dp" />
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Password"
+        android:hint="Phone Number"
         android:textColorHint="@color/white"
         android:backgroundTint="@color/white"
-        android:inputType="textPassword"
+        android:inputType="textPostalAddress"
         android:padding="12dp" />
 
     <Button

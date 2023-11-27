@@ -3,6 +3,8 @@ package com.FairuzMuhammadJBusRA.jbus_android;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,9 +21,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AboutMeActivity extends AppCompatActivity {
-    private Button topUpButton = null;
+    private Button topUpButton, register, manage = null;
     private EditText amount = null;
-    private TextView initial, usernameid, emailid, balanceid;
+    private TextView initial, usernameid, emailid, balanceid, areyou;
     private BaseApiService mApiService;
     private Context mContext;
     @Override
@@ -38,6 +40,9 @@ public class AboutMeActivity extends AppCompatActivity {
         balanceid = findViewById(R.id.balance);
         topUpButton = findViewById(R.id.topupbutton);
         amount = findViewById(R.id.topupamount);
+        areyou = findViewById(R.id.areyou);
+        register = findViewById(R.id.companyreg);
+        manage = findViewById(R.id.manage);
         String balances = String.format(Locale.getDefault(), "%.2f", MainActivity.loggedAccount.balance);
 
         initial.setText(getInitials(MainActivity.loggedAccount.name));
@@ -47,6 +52,21 @@ public class AboutMeActivity extends AppCompatActivity {
 
         topUpButton.setOnClickListener(v->{
             topUp();
+        });
+
+        if(MainActivity.loggedAccount.company!=null){
+            manage.setVisibility(View.VISIBLE);
+            register.setVisibility(View.GONE);
+            register.setEnabled(false);
+            areyou.setVisibility(View.GONE);
+        }
+
+        register.setOnClickListener(v->{
+            moveActivity(this, RegisterRenterActivity.class);
+        });
+
+        manage.setOnClickListener(v->{
+            moveActivity(this, ManageBusActivity.class);
         });
     }
 
@@ -94,5 +114,10 @@ public class AboutMeActivity extends AppCompatActivity {
                 Toast.makeText(mContext, "Invalid Input", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void moveActivity(Context ctx, Class<?> cls){
+        Intent intent = new Intent(ctx, cls);
+        startActivity(intent);
     }
 }
