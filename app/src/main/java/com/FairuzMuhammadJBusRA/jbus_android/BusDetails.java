@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.FairuzMuhammadJBusRA.jbus_android.model.Bus;
@@ -42,7 +43,9 @@ public class BusDetails extends AppCompatActivity {
         tvPrice = findViewById(R.id.price);
         tvFacilities = findViewById(R.id.facilities);
         tvCapacity = findViewById(R.id.capacity);
+
         busID = this.getIntent().getIntExtra("busId", -1);
+
         busDetails();
     }
 
@@ -68,6 +71,14 @@ public class BusDetails extends AppCompatActivity {
                 }
                 tvFacilities.setText(facilitiesBuilder.toString());
                 tvCapacity.setText(Integer.toString(bus.capacity));
+
+                Button book = findViewById(R.id.booking);
+
+                book.setOnClickListener(v->{
+                    Intent i = new Intent(mContext, BookingActivity.class);
+                    i.putExtra("busId", bus.id);
+                    mContext.startActivity(i);
+                });
             }
 
             @Override
@@ -79,7 +90,7 @@ public class BusDetails extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, ManageBusActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }

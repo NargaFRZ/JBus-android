@@ -131,13 +131,6 @@ public class ManageBusActivity extends AppCompatActivity {
                 finish();
             });
 
-            convertView.setOnClickListener(v->{
-                Intent i = new Intent(mContext, BusDetails.class);
-                i.putExtra("busId", bus.id);
-                mContext.startActivity(i);
-                finish();
-            });
-
             return convertView;
         }
 
