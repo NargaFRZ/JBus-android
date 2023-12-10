@@ -23,6 +23,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import androidx.appcompat.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ import com.FairuzMuhammadJBusRA.jbus_android.request.UtilsApi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -84,6 +86,24 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.action_bar_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchBus(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchBus(newText);
+                return true;
+            }
+        });
+
         return true;
     }
 
@@ -92,9 +112,6 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if(id == R.id.account){
             moveActivity(this, AboutMeActivity.class);
-        }
-        if(id == R.id.search){
-
         }
         if(id == R.id.payment){
             moveActivity(this, CheckPaymentActivity.class);
@@ -106,6 +123,24 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    private void searchBus(String query) {
+        List<Bus> filteredList = new ArrayList<>();
+        for (Bus bus : listBus) {
+            if (bus.name.toLowerCase().contains(query.toLowerCase()) ||
+                    bus.departure.stationName.toLowerCase().contains(query.toLowerCase()) ||
+                    bus.arrival.stationName.toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(bus);
+            }
+        }
+        updateListView(filteredList);
+    }
+
+    private void updateListView(List<Bus> buses) {
+        ArrayAdapter<Bus> adapter = new BusArrayAdapter(mContext, buses);
+        busListView.setAdapter(adapter);
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -168,6 +203,8 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println(response.body());
                 if(response.isSuccessful()) {
                     List<Bus> paginatedList = response.body();
+                    listBus.clear();
+                    listBus.addAll(response.body());
                     ArrayAdapter<Bus> adapter = new BusArrayAdapter(mContext, paginatedList);
                     busListView.setAdapter(adapter);
                 }
@@ -210,12 +247,17 @@ public class MainActivity extends AppCompatActivity {
             TextView tvBusName = convertView.findViewById(R.id.busName);
             TextView tvDepartureCity = convertView.findViewById(R.id.departureCity);
             TextView tvArrivalCity = convertView.findViewById(R.id.arrivalCity);
+            TextView tvPrice = convertView.findViewById(R.id.price);
+            TextView tvCapacity = convertView.findViewById(R.id.capacity);
 
             tvBusName.setText(bus.name);
             tvDepartureCity.setText(capital(bus.departure.stationName.toString()));
             tvArrivalCity.setText(capital(bus.arrival.stationName.toString()));
-
+            String price = String.format(Locale.getDefault(), "%.2f", bus.price.price);
+            tvPrice.setText("IDR " + price);
+            tvCapacity.setText(Integer.toString(bus.capacity));
             Button book = convertView.findViewById(R.id.book);
+
             book.setOnClickListener(v->{
                 Intent i = new Intent(mContext, BookingActivity.class);
                 i.putExtra("busId", bus.id);

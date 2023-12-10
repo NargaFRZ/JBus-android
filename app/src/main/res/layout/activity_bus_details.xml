@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back"
+    tools:context=".BookingActivity">
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="50dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Bus Details"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="50dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="3dp"
+            android:layout_marginBottom="9dp"
+            android:gravity="center">
+            <TextView
+                android:layout_width="96dp"
+                android:layout_height="wrap_content"
+                android:text="Bus Name"
+                android:textSize="18dp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/bus_name"
+                android:text="-"
+                android:textSize="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="3dp"
+            android:layout_marginBottom="9dp"
+            android:gravity="center">
+            <TextView
+                android:layout_width="96dp"
+                android:layout_height="wrap_content"
+                android:text="Departure"
+                android:textSize="18dp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/departurestation"
+                android:text="-"
+                android:textSize="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="3dp"
+            android:layout_marginBottom="9dp"
+            android:gravity="center">
+            <TextView
+                android:layout_width="96dp"
+                android:layout_height="wrap_content"
+                android:text="Arrival"
+                android:textSize="18dp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/arrival_station"
+                android:text="-"
+                android:textSize="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="3dp"
+            android:layout_marginBottom="9dp"
+            android:gravity="center">
+            <TextView
+                android:layout_width="96dp"
+                android:layout_height="wrap_content"
+                android:text="Bus Type"
+                android:textSize="18dp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/bus_type"
+                android:text="-"
+                android:textSize="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="3dp"
+            android:layout_marginBottom="9dp"
+            android:gravity="center">
+            <TextView
+                android:layout_width="96dp"
+                android:layout_height="wrap_content"
+                android:text="Price"
+                android:textSize="18dp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/price"
+                android:text="-"
+                android:textSize="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="3dp"
+            android:layout_marginBottom="9dp"
+            android:gravity="center">
+            <TextView
+                android:layout_width="96dp"
+                android:layout_height="wrap_content"
+                android:text="Facilities"
+                android:textSize="18dp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/facilities"
+                android:text="-"
+                android:textSize="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="3dp"
+            android:layout_marginBottom="9dp"
+            android:gravity="center">
+            <TextView
+                android:layout_width="96dp"
+                android:layout_height="wrap_content"
+                android:text="Capacity"
+                android:textSize="18dp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/capacity"
+                android:text="-"
+                android:textSize="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

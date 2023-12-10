@@ -75,8 +75,14 @@ public class ManageBusSchedule extends AppCompatActivity {
             public void onResponse(Call<BaseResponse<Bus>> call, Response<BaseResponse<Bus>> response) {
                 if (!response.isSuccessful()) return;
 
-                List<Schedule> l = response.body().payload.schedules;
-                ArrayAdapter<Schedule> adapter = new ArrayAdapter<>(mContext, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, l);
+                List<Schedule> schedules = response.body().payload.schedules;
+                List<String> formattedDates = new ArrayList<>();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy, HH:mm", Locale.getDefault());
+                for (Schedule schedule : schedules) {
+                    String formattedDate = dateFormat.format(schedule.departureSchedule);
+                    formattedDates.add(formattedDate);
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, formattedDates);
                 scheduleList.setAdapter(adapter);
             }
 

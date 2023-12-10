@@ -62,6 +62,50 @@
                 android:paddingBottom="2dp"
                 tools:text="-"
                 android:textSize="10sp"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Price :"
+                android:textColor="@color/white"
+                android:textSize="10sp"/>
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="2dp"
+                tools:text="-"
+                android:textSize="10sp"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Seat Capacity :"
+                android:textColor="@color/white"
+                android:textSize="10sp"/>
+
+            <TextView
+                android:id="@+id/capacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="2dp"
+                tools:text="-"
+                android:textSize="10sp"
                 android:textColor="@color/white"
                 android:layout_marginBottom="16dp"/>
         </LinearLayout>
@@ -70,10 +114,10 @@
 
     <ImageView
         android:id="@+id/calendar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
         android:layout_marginRight="20dp"
-        android:src="@drawable/baseline_calendar_month_24"/>
+        android:src="@drawable/baseline_calendar_month_24" />
 </RelativeLayout>

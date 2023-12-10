@@ -113,16 +113,29 @@ public class ManageBusActivity extends AppCompatActivity {
             TextView tvBusName = convertView.findViewById(R.id.busName);
             TextView tvDeparture = convertView.findViewById(R.id.departure);
             TextView tvArrival = convertView.findViewById(R.id.arrival);
+            TextView tvPrice = convertView.findViewById(R.id.price);
+            TextView tvCapacity = convertView.findViewById(R.id.capacity);
 
             tvBusName.setText(bus.name);
             tvDeparture.setText(capital(bus.departure.stationName.toString()));
             tvArrival.setText(capital(bus.arrival.stationName.toString()));
+            String price = String.format(Locale.getDefault(), "%.2f", bus.price.price);
+            tvPrice.setText("IDR " + price);
+            tvCapacity.setText(Integer.toString(bus.capacity));
 
             ImageView schedule = convertView.findViewById(R.id.calendar);
             schedule.setOnClickListener(v->{
                 Intent i = new Intent(mContext, ManageBusSchedule.class);
                 i.putExtra("busId", bus.id);
                 mContext.startActivity(i);
+                finish();
+            });
+
+            convertView.setOnClickListener(v->{
+                Intent i = new Intent(mContext, BusDetails.class);
+                i.putExtra("busId", bus.id);
+                mContext.startActivity(i);
+                finish();
             });
 
             return convertView;
