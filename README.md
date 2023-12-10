@@ -17,6 +17,7 @@ The app includes several activities for different functions:
 - `LoginActivity.java`: Handles user login.
 - `RegisterActivity.java`: Allows new users to register.
 - `BookingActivity.java`: Interface for booking a bus.
+- `ManageBusActivity.java`: Interface for a renter to manage his bus.
 
 ## Models
 
