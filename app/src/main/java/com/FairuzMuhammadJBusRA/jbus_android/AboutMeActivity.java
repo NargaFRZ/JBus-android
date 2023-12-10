@@ -21,7 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AboutMeActivity extends AppCompatActivity {
-    private Button topUpButton, register, manage = null;
+    private Button topUpButton, register, manage, logout, payment = null;
     private EditText amount = null;
     private TextView initial, usernameid, emailid, balanceid, areyou;
     private BaseApiService mApiService;
@@ -39,10 +39,12 @@ public class AboutMeActivity extends AppCompatActivity {
         emailid = findViewById(R.id.email);
         balanceid = findViewById(R.id.balance);
         topUpButton = findViewById(R.id.topupbutton);
+        payment =  findViewById(R.id.payment);
         amount = findViewById(R.id.topupamount);
         areyou = findViewById(R.id.areyou);
         register = findViewById(R.id.companyreg);
         manage = findViewById(R.id.manage);
+        logout = findViewById(R.id.logout);
         String balances = String.format(Locale.getDefault(), "%.2f", MainActivity.loggedAccount.balance);
 
         initial.setText(getInitials(MainActivity.loggedAccount.name));
@@ -54,8 +56,14 @@ public class AboutMeActivity extends AppCompatActivity {
             topUp();
         });
 
+        logout.setOnClickListener(v->{
+            MainActivity.loggedAccount = null;
+            moveActivity(this, LoginActivity.class);
+        });
+
         if(MainActivity.loggedAccount.company!=null){
             manage.setVisibility(View.VISIBLE);
+            payment.setVisibility(View.VISIBLE);
             register.setVisibility(View.GONE);
             register.setEnabled(false);
             areyou.setVisibility(View.GONE);
@@ -67,6 +75,10 @@ public class AboutMeActivity extends AppCompatActivity {
 
         manage.setOnClickListener(v->{
             moveActivity(this, ManageBusActivity.class);
+        });
+
+        payment.setOnClickListener(v->{
+            moveActivity(this, RenterPaymentActivity.class);
         });
     }
 
@@ -119,5 +131,11 @@ public class AboutMeActivity extends AppCompatActivity {
     private void moveActivity(Context ctx, Class<?> cls){
         Intent intent = new Intent(ctx, cls);
         startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveActivity(this, MainActivity.class);
     }
 }

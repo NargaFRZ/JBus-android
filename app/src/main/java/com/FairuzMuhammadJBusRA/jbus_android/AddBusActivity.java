@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -23,121 +24,119 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddBusActivity extends AppCompatActivity {
-
+    private TextView title;
     private BaseApiService mApiService;
     private Context mContext;
-    private EditText busName, busCapacity, busPrice;
+    private EditText busNameET, capacityET, priceET;
+    private Spinner busTypeSpinner, departureSpinner, arrivalSpinner;
+    private CheckBox acCheckBox, wifiCheckBox, toiletCheckBox, lcdCheckBox;
+    private CheckBox coolboxCheckBox, lunchCheckBox, baggageCheckBox, electricCheckBox;
+    private Button addButton;
     private BusType[] busType = BusType.values();
-    private BusType selectedBusType;
-    private Spinner busTypeDropdown;
     private List<Station> stationList = new ArrayList<>();
-    private int selectedDepartureStation;
-    private int selectedArrivalStation;
-    private Spinner departureStationDropdown;
-    private Spinner arrivalStationDropdown;
-    private TableLayout facilitiesSection;
-    private CheckBox[] facilitiesCheckBox;
+
+    // selected variables
+    private BusType selectedBusType;
+    private int selectedDeptStationID;
+    private int selectedArrStationID;
     private List<Facility> selectedFacilities = new ArrayList<>();
-    private Button addBusButton;
-
-    private AdapterView.OnItemSelectedListener busTypeOISL, departureOISL, arrivalOISL;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        try {this.getSupportActionBar().hide();}
-        catch (NullPointerException e){}
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bus);
+        getSupportActionBar().hide();
 
-        mApiService = UtilsApi.getApiService();
         mContext = this;
+        mApiService = UtilsApi.getApiService();
 
-        busName = findViewById(R.id.register_bus_name);
-        busCapacity = findViewById(R.id.register_bus_capacity);
-        busPrice = findViewById(R.id.register_bus_price);
-        busTypeDropdown = findViewById(R.id.bus_type_dropdown);
-        departureStationDropdown = findViewById(R.id.departure_station_dropdown);
-        arrivalStationDropdown = findViewById(R.id.arrival_station_dropdown);
-        facilitiesSection = findViewById(R.id.facilities_checkbox_section);
-        addBusButton = findViewById(R.id.create_bus_button);
+        busNameET = this.findViewById(R.id.register_bus_name);
+        capacityET = this.findViewById(R.id.register_bus_capacity);
+        priceET = this.findViewById(R.id.register_bus_price);
+        busTypeSpinner = this.findViewById(R.id.bus_type_dropdown);
+        departureSpinner = this.findViewById(R.id.departure_station_dropdown);
+        arrivalSpinner = this.findViewById(R.id.arrival_station_dropdown);
+        acCheckBox = findViewById(R.id.ac_cb);
+        wifiCheckBox = findViewById(R.id.wifi_cb);
+        toiletCheckBox = findViewById(R.id.toilet_cb);
+        lcdCheckBox = findViewById(R.id.lcd_cb);
+        coolboxCheckBox = findViewById(R.id.coolbox_cb);
+        lunchCheckBox = findViewById(R.id.lunch_cb);
+        baggageCheckBox = findViewById(R.id.baggage_cb);
+        electricCheckBox = findViewById(R.id.electric_cb);
+        addButton = findViewById(R.id.create_bus_button);
 
-        ArrayAdapter adapterBusType = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, busType);
-        adapterBusType.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
-        busTypeDropdown.setAdapter(adapterBusType);
-        busTypeDropdown.setOnItemSelectedListener(setBusType());
+        ArrayAdapter adBus = new ArrayAdapter(this, android.R.layout.simple_list_item_1, busType);
+        adBus.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        busTypeSpinner.setAdapter(adBus);
+        busTypeSpinner.setOnItemSelectedListener(busTypeOISL);
 
-        getStation();
-        setFacilitiesCheckbox();
+        getStationList();
 
-        addBusButton.setOnClickListener(x -> {
+        addButton.setOnClickListener(v->{
             handleAddBus();
         });
     }
+    private boolean validateInput() {
+        updateSelectedFacilities();
+        if (busNameET.getText().toString().isEmpty() ||
+                capacityET.getText().toString().isEmpty() ||
+                priceET.getText().toString().isEmpty() ||
+                selectedFacilities.isEmpty()) {
+            Toast.makeText(mContext, "Field cannot be empty", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
-    private void moveActivity (Context ctx, Class<?> cls) {
-        Intent intent = new Intent(ctx, cls);
-        startActivity(intent);
+        if (selectedDeptStationID == selectedArrStationID) {
+            Toast.makeText(mContext, "Station cannot be same", Toast.LENGTH_SHORT).show();
+        }
+
+        return true;
     }
+    private void handleAddBus() {
+        if (!validateInput()) return;
 
-    private void viewToast (Context ctx, String msg) {
-        Toast.makeText(ctx, msg, Toast.LENGTH_SHORT).show();
-    }
+        String busName = busNameET.getText().toString();
+        int seatCapacity = Integer.parseInt(capacityET.getText().toString());
+        int price = Integer.parseInt(priceET.getText().toString());
 
-    protected AdapterView.OnItemSelectedListener setBusType(){
-        return new AdapterView.OnItemSelectedListener() {
+        mApiService.create(MainActivity.loggedAccount.id, busName, seatCapacity, selectedFacilities, selectedBusType, price, selectedDeptStationID, selectedArrStationID).enqueue(new Callback<BaseResponse<Bus>>() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedBusType = busType[i];
+            public void onResponse(Call<BaseResponse<Bus>> call, Response<BaseResponse<Bus>> response) {
+                if (!response.isSuccessful()) return;
+
+                BaseResponse<Bus> res = response.body();
+                Toast.makeText(mContext, res.message, Toast.LENGTH_SHORT).show();
+                mContext.startActivity(new Intent(mContext, ManageBusActivity.class));
+                finish();
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onFailure(Call<BaseResponse<Bus>> call, Throwable t) {
 
             }
-        };
+        });
     }
-
-    protected void getStation() {
+    private void getStationList() {
         mApiService.getAllStation().enqueue(new Callback<List<Station>>() {
             @Override
             public void onResponse(Call<List<Station>> call, Response<List<Station>> response) {
-                if (response.isSuccessful()) {
-                    stationList = response.body();
-                    List<String> stationName = new ArrayList<>();
-                    for (Station station : stationList) {
-                        stationName.add(station.stationName);
-                    }
-                    ArrayAdapter<Station> adapter = new ArrayAdapter(AddBusActivity.this, android.R.layout.simple_spinner_item, stationName);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    departureStationDropdown.setAdapter(adapter);
-                    arrivalStationDropdown.setAdapter(adapter);
-                    departureStationDropdown.setOnItemSelectedListener(departureOISL);
-                    arrivalStationDropdown.setOnItemSelectedListener(arrivalOISL);
+                if(!response.isSuccessful()) return;
 
-                    departureOISL = new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            selectedDepartureStation = stationList.get(i).id;
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> adapterView) {
-
-                        }
-                    };
-
-                    arrivalOISL = new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            selectedArrivalStation = stationList.get(i).id;
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> adapterView) {
-
-                        }
-                    };
+                stationList = response.body();
+                List<String> stationName = new ArrayList<>();
+                for (Station station : stationList) {
+                    stationName.add(station.stationName);
                 }
+
+                ArrayAdapter deptBus = new ArrayAdapter(mContext, android.R.layout.simple_list_item_1, stationName);
+                deptBus.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+                departureSpinner.setAdapter(deptBus);
+                departureSpinner.setOnItemSelectedListener(deptOISL);
+
+                ArrayAdapter arrBus = new ArrayAdapter(mContext, android.R.layout.simple_list_item_1, stationName);
+                arrBus.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+                arrivalSpinner.setAdapter(arrBus);
+                arrivalSpinner.setOnItemSelectedListener(arrOISL);
             }
 
             @Override
@@ -147,86 +146,80 @@ public class AddBusActivity extends AppCompatActivity {
         });
     }
 
-    protected void setFacilitiesCheckbox() {
-        Facility[] facilityList = Facility.values();
-        facilitiesCheckBox = new CheckBox[facilityList.length];
+    private void updateSelectedFacilities() {
+        selectedFacilities.clear(); // Clear the list before updating
 
-        for (int i = 0; i < facilityList.length; i++) {
-            facilitiesCheckBox[i] = new CheckBox(mContext);
-            facilitiesCheckBox[i].setText(facilityList[i].toString());
-            facilitiesCheckBox[i].setTextColor(getResources().getColor(R.color.white));
-            facilitiesCheckBox[i].setButtonTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
-
-            final int k = i;
-            facilitiesCheckBox[i].setOnCheckedChangeListener((x, isChecked) -> {
-                if (isChecked) {
-                    selectedFacilities.add(facilityList[k]);
-                } else {
-                    selectedFacilities.remove(facilityList[k]);
-                }
-            });
+        if (acCheckBox.isChecked()) {
+            selectedFacilities.add(Facility.AC);
         }
 
-        int row = (facilityList.length % 3 == 0) ? facilityList.length / 3 : (facilityList.length / 3) + 1;
-        TableRow[] rowList = new TableRow[row];
-        int checkBoxIndex = 0;
-
-        for (TableRow thisRow : rowList) {
-            thisRow = new TableRow(mContext);
-            thisRow.setGravity(Gravity.CENTER_VERTICAL);
-
-            for (int i = 0; i < 3; i++) {
-                if (checkBoxIndex < facilitiesCheckBox.length) {
-                    CheckBox thisCheck = facilitiesCheckBox[checkBoxIndex++];
-                    thisRow.addView(thisCheck);
-                }
-            }
-
-            facilitiesSection.addView(thisRow);
+        if (wifiCheckBox.isChecked()) {
+            selectedFacilities.add(Facility.WIFI);
         }
+
+        if (toiletCheckBox.isChecked()) {
+            selectedFacilities.add(Facility.TOILET);
+        }
+
+        if (lcdCheckBox.isChecked()) {
+            selectedFacilities.add(Facility.LCD_TV);
+        }
+
+        if (coolboxCheckBox.isChecked()) {
+            selectedFacilities.add(Facility.COOL_BOX);
+        }
+
+        if (lunchCheckBox.isChecked()) {
+            selectedFacilities.add(Facility.LUNCH);
+        }
+
+        if (baggageCheckBox.isChecked()) {
+            selectedFacilities.add(Facility.LARGE_BAGGAGE);
+        }
+
+        if (electricCheckBox.isChecked()) {
+            selectedFacilities.add(Facility.ELECTRIC_SOCKET);
+        }
+
+        // Now, selectedFacilities contains the selected facilities
     }
 
-    protected void handleAddBus(){
-        String busNameValue = busName.getText().toString();
-        String busCapacityValue = busCapacity.getText().toString();
-        String busPriceValue = busPrice.getText().toString();
 
-        if(busNameValue.isEmpty() || busCapacityValue.isEmpty() || busPriceValue.isEmpty()){
-            viewToast(mContext, "Field Tidak Boleh Kosong");
-            return;
+    AdapterView.OnItemSelectedListener busTypeOISL = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+            selectedBusType = busType[position];
         }
-
-        if(!busCapacityValue.matches("\\d+")){
-            viewToast(mContext, "Field Capacity harus berupa angka");
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
         }
-
-        if(!busPriceValue.matches("\\d+")){
-            viewToast(mContext, "Field Harga harus berupa angka");
+    };
+    AdapterView.OnItemSelectedListener deptOISL = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+            selectedDeptStationID = stationList.get(position).id;
         }
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+        }
+    };
+    AdapterView.OnItemSelectedListener arrOISL = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+            selectedArrStationID = stationList.get(position).id;
+        }
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+        }
+    };
 
-        int capacity = Integer.valueOf(busCapacityValue);
-        int price = Integer.valueOf(busPriceValue);
-        mApiService.create(MainActivity.loggedAccount.id, busNameValue, capacity, selectedFacilities, selectedBusType, price, selectedDepartureStation, selectedArrivalStation)
-                .enqueue(new Callback<BaseResponse<Bus>>() {
-                    @Override
-                    public void onResponse(Call<BaseResponse<Bus>> call, Response<BaseResponse<Bus>> response) {
-                        if(!response.isSuccessful()){
-                            viewToast(mContext, "Application error " + response.code());
-                            return;
-                        }
-
-                        BaseResponse<Bus> res = response.body();
-                        if(res.success) {
-                            finish();
-                            moveActivity(mContext, ManageBusActivity.class);
-                        }
-                        viewToast(mContext, res.message);
-                    }
-
-                    @Override
-                    public void onFailure(Call<BaseResponse<Bus>> call, Throwable t) {
-                        viewToast(mContext, "Ada problem pada server");
-                    }
-                });
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, ManageBusActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

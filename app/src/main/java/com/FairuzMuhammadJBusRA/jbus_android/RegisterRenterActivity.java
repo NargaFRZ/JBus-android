@@ -3,6 +3,7 @@ package com.FairuzMuhammadJBusRA.jbus_android;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,6 +63,7 @@ public class RegisterRenterActivity extends AppCompatActivity {
                 if (res.success) {
                     MainActivity.loggedAccount.company = res.payload;
                     Toast.makeText(mContext, res.message, Toast.LENGTH_SHORT).show();
+                    moveActivity(RegisterRenterActivity.this, AboutMeActivity.class);
                     finish();
                 }
             }
@@ -70,5 +72,16 @@ public class RegisterRenterActivity extends AppCompatActivity {
                 Toast.makeText(mContext, "Problem with the server", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void moveActivity(Context ctx, Class<?> cls){
+        Intent intent = new Intent(ctx, cls);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveActivity(this, AboutMeActivity.class);
     }
 }

@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
     private void moveActivity(Context ctx, Class<?> cls){
         Intent intent = new Intent(ctx, cls);
         startActivity(intent);
+        finish();
     }
 
     protected void handleLogin(){

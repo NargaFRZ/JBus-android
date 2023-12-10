@@ -11,10 +11,16 @@
     android:padding="16dp"
     tools:context=".MainActivity">
 
-    <ListView
-        android:id="@+id/listview"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_above="@id/pagination_footer">
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/pagination_footer"

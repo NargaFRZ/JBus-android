@@ -10,12 +10,22 @@
     android:padding="16dp"
     tools:context=".AboutMeActivity">
 
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:backgroundTint="@color/white"
+        app:cornerRadius="20dp"
+        android:text="Log Out"
+        android:textColor="@color/black"/>
+
     <TextView
         android:id="@+id/initial"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/circle"
         android:gravity="center"
         android:textColor="@color/black"
@@ -181,6 +191,22 @@
             android:layout_marginRight="50dp"
             android:layout_gravity="center"
             android:text="Manage Bus"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            app:cornerRadius="20dp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            />
+
+        <Button
+            android:id="@+id/payment"
+            android:layout_marginTop="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_gravity="center"
+            android:text="Manage Payments"
             android:backgroundTint="@color/white"
             android:textColor="@color/black"
             app:cornerRadius="20dp"

@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back"
-    android:orientation="vertical"
-    tools:context=".AddBusActivity">
+    android:background="@drawable/back">
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context=".AddBusActivity">
 
     <TextView
         android:layout_width="match_parent"
@@ -25,126 +30,230 @@
         android:text="Add your Bus"
         android:textColor="@color/white"
         android:textSize="12sp" />
-
-    <EditText
-        android:id="@+id/register_bus_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Bus Name"
-        android:textColorHint="@color/white"
-        android:backgroundTint="@color/white"
-        android:inputType="textPersonName"
-        android:padding="12dp" />
-
-    <EditText
-        android:id="@+id/register_bus_capacity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Capacity"
-        android:textColorHint="@color/white"
-        android:backgroundTint="@color/white"
-        android:inputType="number"
-        android:padding="12dp" />
-
-    <EditText
-        android:id="@+id/register_bus_price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Price"
-        android:textColorHint="@color/white"
-        android:backgroundTint="@color/white"
-        android:inputType="number"
-        android:padding="12dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="3dp"
-        android:layout_marginBottom="9dp"
-        android:gravity="center">
-        <TextView
-            android:layout_width="96dp"
-            android:layout_height="wrap_content"
-            android:text="Bus Type"
-            android:textSize="18dp"
-            android:textColor="@color/white"/>
-
-        <Spinner
-            android:id="@+id/bus_type_dropdown"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            style="@style/SpinnerWhite"/>
     </LinearLayout>
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="3dp"
-        android:layout_marginBottom="9dp"
-        android:gravity="center">
-        <TextView
-            android:layout_width="96dp"
-            android:layout_height="wrap_content"
-            android:text="Departure"
-            android:textSize="18dp"
-            android:textColor="@color/white"/>
-
-        <Spinner
-            android:id="@+id/departure_station_dropdown"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_above="@id/addbutton"
+        android:layout_below="@id/header">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            style="@style/SpinnerWhite"/>
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            tools:context=".AddBusActivity">
 
+            <EditText
+                android:id="@+id/register_bus_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Bus Name"
+                android:textColorHint="@color/white"
+                android:backgroundTint="@color/white"
+                android:inputType="textPersonName"
+                android:padding="12dp" />
+
+            <EditText
+                android:id="@+id/register_bus_capacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Capacity"
+                android:textColorHint="@color/white"
+                android:backgroundTint="@color/white"
+                android:inputType="number"
+                android:padding="12dp" />
+
+            <EditText
+                android:id="@+id/register_bus_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Price"
+                android:textColorHint="@color/white"
+                android:backgroundTint="@color/white"
+                android:inputType="number"
+                android:padding="12dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="3dp"
+                android:layout_marginBottom="9dp"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="96dp"
+                    android:layout_height="wrap_content"
+                    android:text="Bus Type"
+                    android:textSize="18dp"
+                    android:textColor="@color/white"/>
+
+                <Spinner
+                    android:id="@+id/bus_type_dropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:backgroundTint="@color/white"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="3dp"
+                android:layout_marginBottom="9dp"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="96dp"
+                    android:layout_height="wrap_content"
+                    android:text="Departure"
+                    android:textSize="18dp"
+                    android:textColor="@color/white"/>
+
+                <Spinner
+                    android:id="@+id/departure_station_dropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:backgroundTint="@color/white"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="3dp"
+                android:layout_marginBottom="9dp"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="96dp"
+                    android:layout_height="wrap_content"
+                    android:text="Arrival"
+                    android:textSize="18dp"
+                    android:textColor="@color/white"/>
+
+                <Spinner
+                    android:id="@+id/arrival_station_dropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:backgroundTint="@color/white"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="3dp"
+                android:layout_marginVertical="10dp">
+
+                <TextView
+                    android:layout_width="96dp"
+                    android:layout_height="wrap_content"
+                    android:text="Facilities"
+                    android:textSize="18dp"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="8dp"/>
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:rowCount="3"
+                    android:columnCount="3">
+
+                    <CheckBox
+                        android:id="@+id/ac_cb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:buttonTint="@color/white"
+                        android:text="AC"
+                        android:textColor="@color/white"/>
+                    <CheckBox
+                        android:id="@+id/wifi_cb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:buttonTint="@color/white"
+                        android:text="WiFi"
+                        android:textColor="@color/white"/>
+                    <CheckBox
+                        android:id="@+id/toilet_cb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:buttonTint="@color/white"
+                        android:text="Toilet"
+                        android:textColor="@color/white"/>
+                    <CheckBox
+                        android:id="@+id/lcd_cb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:buttonTint="@color/white"
+                        android:text="LCD TV"
+                        android:textColor="@color/white"/>
+                    <CheckBox
+                        android:id="@+id/coolbox_cb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:buttonTint="@color/white"
+                        android:text="Coolbox"
+                        android:textColor="@color/white"/>
+                    <CheckBox
+                        android:id="@+id/lunch_cb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:buttonTint="@color/white"
+                        android:text="Lunch"
+                        android:textColor="@color/white"/>
+                    <CheckBox
+                        android:id="@+id/baggage_cb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:buttonTint="@color/white"
+                        android:text="Large Baggage"
+                        android:textColor="@color/white"/>
+                    <CheckBox
+                        android:id="@+id/electric_cb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/white"
+                        android:checked="false"
+                        android:text="Electric Socket"
+                        android:textColor="@color/white"/>
+                </GridLayout>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </ScrollView>
     <LinearLayout
+        android:id="@+id/addbutton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="3dp"
-        android:layout_marginBottom="9dp"
-        android:gravity="center">
-        <TextView
-            android:layout_width="96dp"
-            android:layout_height="wrap_content"
-            android:text="Arrival"
-            android:textSize="18dp"
-            android:textColor="@color/white"/>
-
-        <Spinner
-            android:id="@+id/arrival_station_dropdown"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            style="@style/SpinnerWhite"/>
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Facilities"
-        android:textColor="@color/white"
-        android:textSize="18sp"/>
-
-    <TableLayout
-        android:id="@+id/facilities_checkbox_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
-    </TableLayout>
-
-
-    <Button
-        android:id="@+id/create_bus_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="@color/white"
+        android:gravity="bottom"
+        android:layout_marginVertical="24dp"
         android:paddingVertical="12dp"
-        android:text="Add Bus"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:textAllCaps="false"
-        app:cornerRadius="21dp" />
-
-</LinearLayout>
+        android:layout_alignParentBottom="true"
+        android:padding="16dp">
+        <Button
+            android:id="@+id/create_bus_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:text="Add Bus"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            app:cornerRadius="21dp" />
+    </LinearLayout>
+</RelativeLayout>

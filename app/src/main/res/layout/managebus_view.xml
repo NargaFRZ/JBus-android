@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <RelativeLayout
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        tools:context=".ManageBusActivity">
         <TextView
             android:id="@+id/busName"
             android:layout_width="match_parent"
@@ -19,58 +20,60 @@
             android:textSize="18sp"
             android:textColor="@color/white"
             android:gravity="center_vertical"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/baseline_calendar_month_24"/>
-    </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:text="Arrival :"
-            android:textColor="@color/white"
-            android:textSize="10sp"/>
-
-        <TextView
-            android:id="@+id/arrival"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="2dp"
-            tools:text="-"
-            android:textSize="10sp"
-            android:textColor="@color/white"/>
-    </LinearLayout>
+            android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Arrival :"
+                android:textColor="@color/white"
+                android:textSize="10sp"/>
 
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:text="Departure :"
-            android:textColor="@color/white"
-            android:textSize="10sp"/>
+            <TextView
+                android:id="@+id/arrival"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="2dp"
+                tools:text="-"
+                android:textSize="10sp"
+                android:textColor="@color/white"/>
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/departure"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="2dp"
-            tools:text="-"
-            android:textSize="10sp"
-            android:textColor="@color/white"
-            android:layout_marginBottom="16dp"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Departure :"
+                android:textColor="@color/white"
+                android:textSize="10sp"/>
+
+            <TextView
+                android:id="@+id/departure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="2dp"
+                tools:text="-"
+                android:textSize="10sp"
+                android:textColor="@color/white"
+                android:layout_marginBottom="16dp"/>
+        </LinearLayout>
+
     </LinearLayout>
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/baseline_calendar_month_24"/>
+</RelativeLayout>

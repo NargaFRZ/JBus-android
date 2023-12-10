@@ -5,10 +5,12 @@ import com.FairuzMuhammadJBusRA.jbus_android.model.BaseResponse;
 import com.FairuzMuhammadJBusRA.jbus_android.model.Bus;
 import com.FairuzMuhammadJBusRA.jbus_android.model.BusType;
 import com.FairuzMuhammadJBusRA.jbus_android.model.Facility;
+import com.FairuzMuhammadJBusRA.jbus_android.model.Payment;
 import com.FairuzMuhammadJBusRA.jbus_android.model.Renter;
 import com.FairuzMuhammadJBusRA.jbus_android.model.Station;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -61,4 +63,48 @@ public interface BaseApiService {
     @GET("station/getAll")
     Call<List<Station>> getAllStation();
 
+    @GET("bus/page")
+    Call<List<Bus>> getBus(@Query("page") int page, @Query("size") int pageSize);
+
+    @GET("bus/numberOfBuses")
+    Call<Integer> numberOfBuses();
+
+    @POST("bus/addSchedule")
+    Call<BaseResponse<Bus>> addSchedule(@Query("busId") int busId,
+                                        @Query("time") String time);
+
+    @GET("bus/{id}")
+    Call<Bus> getBusbyId(@Path("id") int busId);
+
+    @GET("bus/seats")
+    Call<Map<String,Boolean>> getSeats(@Query("busId") int busId,
+                                       @Query("date") String date);
+
+    @POST("payment/makeBooking")
+    Call<BaseResponse<Payment>> makeBooking(
+            @Query("buyerId") int buyerId,
+            @Query("renterId") int renterId,
+            @Query("busId") int busId,
+            @Query("busSeats") List<String> busSeats,
+            @Query("departureDate") String departureDate
+    );
+
+    @GET("payment/getAccountPayment")
+    Call<List<Payment>> getBuyerPayment(
+            @Query("accountId") int accountId
+    );
+
+    @GET("payment/getRenterPayment")
+    Call<List<Payment>> getRenterPayment(
+            @Query("renterId") int renterId
+    );
+
+    @POST("payment/{id}/cancel")
+    Call<BaseResponse<Payment>> cancel(
+            @Path("id") int id
+    );
+    @POST("payment/{id}/accept")
+    Call<BaseResponse<Payment>> accept(
+            @Path("id") int id
+    );
 }

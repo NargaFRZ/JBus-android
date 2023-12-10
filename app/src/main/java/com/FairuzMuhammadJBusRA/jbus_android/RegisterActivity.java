@@ -47,6 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void moveActivity(Context ctx, Class<?> cls){
         Intent intent = new Intent(ctx, cls);
         startActivity(intent);
+        finish();
     }
 
     protected void handleRegister() {
@@ -65,7 +66,10 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
             BaseResponse<Account> res = response.body();
-            if (res.success) finish();
+            if (res.success){
+                moveActivity(RegisterActivity.this, LoginActivity.class);
+                finish();
+            }
             Toast.makeText(mContext, res.message, Toast.LENGTH_SHORT).show();
         }
         @Override
